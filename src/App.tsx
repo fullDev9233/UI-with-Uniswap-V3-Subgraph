@@ -1,6 +1,11 @@
-import React from 'react'
+import { useQuery } from '@apollo/client'
+import { tokensQuery } from './gql/tokensQuery'
 
-function App() {
+const App = () => {
+  const { loading, data } = useQuery(tokensQuery)
+
+  console.log(data)
+
   return (
     <div className='App'>
       <header className='App-header'>

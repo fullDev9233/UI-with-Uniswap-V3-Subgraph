@@ -1,23 +1,10 @@
-import { ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client'
-import { setContext } from '@apollo/client/link/context'
+import { ApolloClient, InMemoryCache } from '@apollo/client'
 
-const httpLink = createHttpLink({
-  uri:
-    process.env.REACT_APP_GRAPHQL_API ||
-    'https://coryx-pas-test.etops.ch/staging-api/graphql',
-})
-
-const authLink = setContext((_, { headers }) => {
-  const token = localStorage.getItem('jwttoken')
-  return {
-    headers: {
-      ...headers,
-      authorization: token ? `Bearer ${token}` : '',
-    },
-  }
-})
+const uri =
+  process.env.REACT_APP_UNISWAP_V3_SUBGRAPH ||
+  'https://api.thegraph.com/subgraphs/name/uniswap/uniswap-v3'
 
 export const client = new ApolloClient({
-  link: authLink.concat(httpLink),
+  uri,
   cache: new InMemoryCache(),
 })
